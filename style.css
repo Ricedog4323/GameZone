@@ -50,3 +50,14 @@ canvas{
 .info{
     margin-left: 70px;
 }
+
+.popup{
+    background-color: red;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+}
+
+dialog{
+    margin-top: 10px;
+}

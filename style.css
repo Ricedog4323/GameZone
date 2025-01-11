@@ -61,3 +61,22 @@ canvas{
 dialog{
     margin-top: 10px;
 }
+
+.welcome-h2{
+    h2{
+        color: yellow;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-weight: 50;
+        font-size: 50px;
+    }
+}
+
+.play-now{
+    a{
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+        background-color: blue;
+        font-size: 50px;
+    }
+}

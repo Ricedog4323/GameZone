@@ -80,3 +80,9 @@ dialog{
         font-size: 50px;
     }
 }
+
+.Game2 a{
+    background-image: linear-gradient(blue, black);
+    text-decoration: none;
+    color: white;
+}

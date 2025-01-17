@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameZone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="banner-and-nav">
+            <a href="games.html"><h1>GameZone</h1></a>
+            <a href="Rules.html">Rules</a>
+            <a href="Users.html">Users</a>
+            <a href="Upload.html">Upload</a>
+            <a href="Blog.html">Blog</a>
+        </div>
+    </nav>
+
+    <h1>Math Game!!1!1!!!1!1!</h1>
+
+    <div class="Math">
+        <p>Question: <span id="equation">0 + 0</span></p>
+        <input type="number" id="answer" placeholder="Answer">
+        <button id="submit">OK</button>
+    </div>
+
+    <h1>Math Game</h1>
+    <p>By Ricedog</p>
+
+    <script>
+        let correctAnswer = 0;
+
+        function generateRandomEquation() {
+            const num1 = Math.floor(Math.random() * 100) + 1;
+            const num2 = Math.floor(Math.random() * 100) + 1;
+            const operations = ['+', '*', '/', '-'];
+            const operation = operations[Math.floor(Math.random() * operations.length)];
+            let equation = '';
+
+            switch (operation) {
+                case '+':
+                    correctAnswer = num1 + num2;
+                    equation = `${num1} + ${num2}`;
+                    break;
+                case '*':
+                    correctAnswer = num1 * num2;
+                    equation = `${num1} * ${num2}`;
+                    break;
+                case '-':
+                    correctAnswer = num1 - num2;
+                    equation = `${num1} - ${num2}`;
+                    break;
+                case '/':
+                    correctAnswer = parseFloat((num1 / num2).toFixed(2));
+                    equation = `${num1} / ${num2}`;
+                    break;
+            }
+
+            document.getElementById('equation').innerText = equation;
+        }
+
+        document.getElementById('submit').addEventListener('click', function() {
+            const userAnswer = parseFloat(document.getElementById('answer').value);
+            if (userAnswer === correctAnswer) {
+                alert('Correct!');
+            } else {
+                alert('Wrong! The correct answer was ' + correctAnswer);
+            }
+            document.getElementById('answer').value = '';
+            generateRandomEquation();
+        });
+
+        generateRandomEquation();
+    </script>
+
+</body>
+</html>

@@ -19,7 +19,23 @@ const drawSnake = () => {
     });
 };
 
+const moveSnake = () => {
+    const head = snake[snake.length - 1];
 
+    let newHead;
+    if (direction === "right") {
+        newHead = { x: head.x + size, y: head.y };
+    } else if (direction === "left") {
+        newHead = { x: head.x - size, y: head.y };
+    } else if (direction === "up") {
+        newHead = { x: head.x, y: head.y - size };
+    } else if (direction === "down") {
+        newHead = { x: head.x, y: head.y + size };
+    }
+
+    snake.push(newHead);
+    snake.shift();
+};
 
 window.addEventListener("keydown", (event) => {
     if (event.key === "ArrowRight" && direction !== "left") {

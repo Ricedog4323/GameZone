@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rules</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="banner-and-nav">
+            <a href="games.html"><h1>GameZone</h1></a>
+            <a href="Rules.html">Rules</a>
+            <a href="Users.html">Users</a>
+            <a href="Upload.html">Upload</a>
+            <a href="Blog.html">Blog</a>
+        </div>
+    </nav>
+
+    <h1>Simple clicker game (uses cucumbers)</h1>
+    <h1>MADE BY @aabobusfewdays ON YT</h1>
+    <hr>
+    <div class="part1">
+    <h3>Cucumbers: <span id="cum">0</span></h3>
+    <h3>Rebirths: <span id="rebirthes">1</span></h3>
+        
+    <button type="button" onclick="inc()">Get a cucumber</button>
+    <button type="button" onClick="rebirth()" >Rebirth</button>
+    <h4 id="warni"></h4>
+    </div>
+    <p>THIS GAME MAY APPEAR TOO SMALL ON COMPUTERS/BIG SCREENS BECAYSE IT WAS MADE ON MOBILE</p>
+    <script>
+        let rwb = 0;
+        let count = 0; // count of cucumbers
+        let noche = 1;
+        let multi = 1; // multiplier (rebirths)
+        let rr = 100;
+        
+        function inc(){
+            count++;
+            console.log("Inc Succesful");
+            count = count + noche * multi - 1;
+          document.getElementById("cum").textContent = Math.floor(count); 
+        };
+        function rebirth(){
+            if (count >= rr) {
+                count=0
+                rwb++
+                multi = rwb + 1
+                rr = multi*100
+                document.getElementById("rebirthes").textContent = multi
+                document.getElementById("cum").textContent = count
+            }
+            else {
+            document.getElementById("warni").textContent = "NOT ENOUGH CUCUMBERS, CUCUMBERS REQUIRED: "+ rr;
+                setTimeout(function() {
+  document.getElementById("warni").textContent = "";
+}, 2000);
+            };
+        }
+
+    </script>
+
+    <h1>Simple Clicker Game</h1>
+    <p>By Spaciee_GZS</p>
+
+</body>
+</html>

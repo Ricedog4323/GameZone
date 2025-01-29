@@ -117,7 +117,6 @@ const canvas = document.querySelector("canvas");
         const checkCollision = () => {
             const head = snake[snake.length - 1];
             if (head.x < 0 || head.x > 570 || head.y < 0 || head.y > 570) {
-                alert("Game Over");
                 resetGame();
             }
         };

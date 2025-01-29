@@ -1,142 +1,141 @@
 const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext("2d");
 
-const audio = new Audio("Audio.mp3");
+        const audio = new Audio("Audio.mp3");
 
-const size = 30;
-const gridSize = 30;
+        const size = 30;
 
-const snake = [
-    { x: 180, y: 180 },
-    { x: 210, y: 180 },
-];
+        const snake = [
+            { x: 180, y: 180 },
+            { x: 210, y: 180 },
+        ];
 
-let direction = "right";
+        let direction = "right";
 
-const drawSnake = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);  // Clear the entire canvas
-    ctx.fillStyle = "#ddd";  // Color for snake
+        const drawSnake = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#ddd";
 
-    snake.forEach((segment) => {
-        ctx.fillRect(segment.x, segment.y, size, size);  // Draw each snake segment
-    });
-};
+            snake.forEach((segment) => {
+                ctx.fillRect(segment.x, segment.y, size, size);
+            });
+        };
 
-const moveSnake = () => {
-    const head = snake[snake.length - 1];
-    let newHead;
+        const moveSnake = () => {
+            const head = snake[snake.length - 1];
 
-    // Move the snake based on current direction
-    if (direction === "right") {
-        newHead = { x: head.x + size, y: head.y };
-    } else if (direction === "left") {
-        newHead = { x: head.x - size, y: head.y };
-    } else if (direction === "up") {
-        newHead = { x: head.x, y: head.y - size };
-    } else if (direction === "down") {
-        newHead = { x: head.x, y: head.y + size };
-    }
+            let newHead;
+            if (direction === "right") {
+                newHead = { x: head.x + size, y: head.y };
+            } else if (direction === "left") {
+                newHead = { x: head.x - size, y: head.y };
+            } else if (direction === "up") {
+                newHead = { x: head.x, y: head.y - size };
+            } else if (direction === "down") {
+                newHead = { x: head.x, y: head.y + size };
+            }
 
-    snake.push(newHead);  // Add the new head
-    snake.shift();  // Remove the last part of the snake to keep the same length
-};
+            snake.push(newHead);
+            snake.shift();
+        };
 
-const drawGrid = () => {
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = "gray";
+        // Mobile control buttons
+        document.getElementById("up").addEventListener("click", () => {
+            if (direction !== "down") direction = "up";
+        });
+        document.getElementById("left").addEventListener("click", () => {
+            if (direction !== "right") direction = "left";
+        });
+        document.getElementById("down").addEventListener("click", () => {
+            if (direction !== "up") direction = "down";
+        });
+        document.getElementById("right").addEventListener("click", () => {
+            if (direction !== "left") direction = "right";
+        });
 
-    // Draw grid lines on the canvas
-    for (let i = 0; i < canvas.width; i += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(i, 0);
-        ctx.lineTo(i, canvas.height);
-        ctx.moveTo(0, i);
-        ctx.lineTo(canvas.width, i);
-        ctx.stroke();
-    }
-};
+        const drawGrid = () => {
+            ctx.lineWidth = 1;
 
-const randomPosition = () => {
-    return Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize;
-};
+            for (let i = 30; i < canvas.width; i += 30) {
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, 600);
+                ctx.stroke();
+                ctx.beginPath();
 
-const randomColor = () => {
-    const red = Math.floor(Math.random() * 256);
-    const green = Math.floor(Math.random() * 256);
-    const blue = Math.floor(Math.random() * 256);
+                ctx.moveTo(0, i);
+                ctx.lineTo(600, i);
+                ctx.stroke();
+                ctx.beginPath();
+            }
+        };
 
-    return `rgb(${red}, ${green}, ${blue})`;
-};
+        const randomPosition = () => {
+            const number = randomNumber(0, canvas.width - size);
+            return Math.round(number / 30) * 30;
+        };
 
-const food = {
-    x: randomPosition(),
-    y: randomPosition(),
-    color: randomColor(),
-};
+        const randomNumber = (min, max) => {
+            return Math.round(Math.random() * (max - min) + min);
+        };
 
-const drawFood = () => {
-    ctx.shadowColor = "white";
-    ctx.shadowBlur = 10;
-    ctx.fillStyle = food.color;
-    ctx.fillRect(food.x, food.y, size, size);
-    ctx.shadowBlur = 0;
-};
+        const randomColor = () => {
+            const red = randomNumber(0, 255);
+            const green = randomNumber(0, 255);
+            const blue = randomNumber(0, 255);
 
-const checkEat = () => {
-    const head = snake[snake.length - 1];
+            return `rgb(${red}, ${green}, ${blue})`;
+        };
 
-    // If the snake's head collides with food
-    if (head.x === food.x && head.y === food.y) {
-        snake.push({ ...head });  // Add a new segment to the snake
-        audio.play();
+        const food = {
+            x: randomPosition(),
+            y: randomPosition(),
+            color: randomColor(),
+        };
 
-        // Reposition the food
-        food.x = randomPosition();
-        food.y = randomPosition();
-        food.color = randomColor();
-    }
-};
+        const drawFood = () => {
+            const { x, y, color } = food;
+            ctx.shadowColor = "white";
+            ctx.shadowBlur = 50;
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, size, size);
+            ctx.shadowBlur = 0;
+        };
 
-const checkCollision = () => {
-    const head = snake[snake.length - 1];
+        const checkEat = () => {
+            const head = snake[snake.length - 1];
 
-    // If the snake collides with the wall (border)
-    if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
-        resetGame();
-    }
-};
+            if (head.x == food.x && head.y == food.y) {
+                snake.push(head);
+                audio.play();
 
-const resetGame = () => {
-    // Reset the snake to its initial state
-    snake.length = 2;
-    snake[0] = { x: 180, y: 180 };
-    snake[1] = { x: 210, y: 180 };
+                food.x = randomPosition();
+                food.y = randomPosition();
+                food.color = randomColor();
+            }
+        };
 
-    // Reset the direction
-    direction = "right";
-};
+        const checkCollision = () => {
+            const head = snake[snake.length - 1];
+            if (head.x < 0 || head.x > 570 || head.y < 0 || head.y > 570) {
+                alert("Game Over");
+                resetGame();
+            }
+        };
 
-window.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowRight" && direction !== "left") {
-        direction = "right";
-    } else if (event.key === "ArrowLeft" && direction !== "right") {
-        direction = "left";
-    } else if (event.key === "ArrowUp" && direction !== "down") {
-        direction = "up";
-    } else if (event.key === "ArrowDown" && direction !== "up") {
-        direction = "down";
-    }
-});
+        const resetGame = () => {
+            snake.length = 2;
+            snake[0] = { x: 180, y: 180 };
+            snake[1] = { x: 210, y: 180 };
+            direction = "right";
+        };
 
-// Set an interval to continuously update the game every 150ms
-setInterval(() => {
-    moveSnake();
-    drawSnake();
-    drawGrid();
-    drawFood();
-    checkEat();
-    checkCollision();
-}, 150);
+        setInterval(() => {
+            moveSnake();
+            drawSnake();
+            drawGrid();
+            drawFood();
+            checkEat();
+            checkCollision();
+        }, 150);
 
-// Initial function calls to set up the game
-drawGrid();
+        drawGrid();

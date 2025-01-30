@@ -85,9 +85,18 @@ dialog{
 }
 
 #textBox{
-    border-color: black;
     border-width: 5px;
-    border-style: dashed;
-    background-color: rgb(255, 58, 9);
     margin-top: 20px;
+}
+
+.FilterNav{
+    background-color: grey;
+    height: 70px;
+    align-content: center;
+    a{
+        color: white;
+        text-decoration: none;
+        padding: 80px;
+        font-weight: 600;
+    }
 }
